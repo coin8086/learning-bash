@@ -4,16 +4,22 @@
 # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameters.html
 
 declare -i x=100
-declare -a a=('a' 'b' 'c')
 
-function f {
-  local -n ref_x=$1
-  local -n ref_a=$2
-  echo "f before: ref_x=$ref_x ref_a=${a[@]}"
-  ref_x+=10
-  ref_a+=('d' 'e')
-  echo "f after: ref_x=$ref_x ref_a=${a[@]}"
+function f1 {
+  local -n ref=$1
+  ref+=1
+  echo "f1: ref=$ref"
+
+  # NOTE: Here the name $1 is passed to f2.
+  # Also note that the variable of name $1, is visible to f2.
+  f2 $1
 }
 
-f x a
-echo "x=$x ref_a=${a[@]}"
+function f2 {
+  local -n ref=$1
+  ref+=1
+  echo "f2: ref=$ref"
+}
+
+f1 x
+echo "x=$x"

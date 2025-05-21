@@ -15,6 +15,8 @@ function f1 {
   # NOTE: Here the name $1 is passed to f2.
   # Also note that the variable of name $1, is visible to f2.
   f2 $1 ref y z
+
+  echo "f1: z=$z"
 }
 
 function f2 {
@@ -31,7 +33,11 @@ function f2 {
 
   local -n ref4=$4
   echo "f2: ref4=$ref4"
+
+  ref4="hi"
 }
 
 f1 x
 echo "x=$x"
+echo "y=$y"
+echo "z=$z"
